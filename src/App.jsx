@@ -5,9 +5,9 @@ import Answers from "./components/Answers";
 const App = () => {
   // -------------------- STATE --------------------
   const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([]); // {type:"q"|"a", text:string}
+  const [messages, setMessages] = useState([]); 
   const [loading, setLoading] = useState(false);
-  const [sessions, setSessions] = useState([]); // [{q,a}...]
+  const [sessions, setSessions] = useState([]); 
 
   // -------------------- REFS --------------------
   const lastMsgRef = useRef(null);
@@ -70,9 +70,9 @@ const App = () => {
 
   // -------------------- UI --------------------
   return (
-     <div className="h-screen grid grid-cols-5 bg-zinc-950 text-white">
-      {/* Sidebar (Gemini-like) */}
-      <aside className="col-span-1 bg-zinc-900 border-r border-zinc-800 p-4 overflow-y-auto">
+    <div className="h-screen grid grid-cols-1 md:grid-cols-5 bg-zinc-950 text-white">
+      {/* Sidebar */}
+      <aside className="hidden md:block col-span-1 bg-zinc-900 border-r border-zinc-800 p-4 overflow-y-auto">
         <div className="flex items-center gap-2 mb-4">
           <div className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
           <span className="text-sm text-zinc-300">2.5 Flash</span>
@@ -98,45 +98,44 @@ const App = () => {
 
       {/* Chat area */}
       <main className="col-span-4 flex flex-col">
-        {/* Header / hero like Gemini */}
-        <div className="px-6 pt-6">
-          <h1 className="text-2xl font-semibold text-zinc-200">
+        {/* Header */}
+        <div className="px-4 sm:px-6 pt-4 sm:pt-6">
+          <h1 className="text-xl sm:text-2xl font-semibold text-zinc-200">
             Hello, <span className="text-emerald-400">Async</span>
           </h1>
-          <p className="text-zinc-400">What can I help you with?</p>
+          <p className="text-zinc-400 text-sm sm:text-base">
+            What can I help you with?
+          </p>
         </div>
 
-       {/* Messages list */}
-{/* Messages list */}
-<div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 hide-scrollbar">
-  {messages.map((m, idx) => {
-    const isLast = idx === messages.length - 1;
-    return (
-      <div key={idx} ref={isLast ? lastMsgRef : null}>
-        <Answers ans={m} />
-      </div>
-    );
-  })}
+        {/* Messages list */}
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 hide-scrollbar">
+          {messages.map((m, idx) => {
+            const isLast = idx === messages.length - 1;
+            return (
+              <div key={idx} ref={isLast ? lastMsgRef : null}>
+                <Answers ans={m} />
+              </div>
+            );
+          })}
 
-  {/* Typing dots */}
-  {loading && (
-    <div className="flex justify-start" ref={lastMsgRef}>
-      <div className="bg-zinc-800 px-4 py-2 rounded-xl text-sm flex items-center gap-1">
-        <span className="animate-bounce">●</span>
-        <span className="animate-bounce [animation-delay:120ms]">●</span>
-        <span className="animate-bounce [animation-delay:240ms]">●</span>
-      </div>
-    </div>
-  )}
-</div>
+          {/* Typing dots */}
+          {loading && (
+            <div className="flex justify-start" ref={lastMsgRef}>
+              <div className="bg-zinc-800 px-4 py-2 rounded-xl text-sm flex items-center gap-1">
+                <span className="animate-bounce">●</span>
+                <span className="animate-bounce [animation-delay:120ms]">●</span>
+                <span className="animate-bounce [animation-delay:240ms]">●</span>
+              </div>
+            </div>
+          )}
+        </div>
 
-
-
-        {/* Composer (Ask Gemini box) */}
-        <div className="p-4 border-t border-zinc-800 bg-zinc-950 sticky bottom-0">
-          <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-3xl px-4 py-2">
+        {/* Composer */}
+        <div className="p-3 sm:p-4 border-t border-zinc-800 bg-zinc-950 fixed bottom-0 left-0 right-0 md:static">
+          <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-3xl px-3 sm:px-4 py-2">
             <input
-              className="flex-1 bg-transparent outline-none placeholder-zinc-500"
+              className="flex-1 bg-transparent outline-none placeholder-zinc-500 text-sm sm:text-base"
               placeholder="Ask Gemini"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
@@ -144,7 +143,7 @@ const App = () => {
             />
             <button
               onClick={askQuestion}
-              className="px-4 py-1.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm"
+              className="px-3 sm:px-4 py-1.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm"
             >
               Send
             </button>

@@ -24,17 +24,15 @@ const Answers = ({ ans }) => {
     // User bubble (right)
     return (
       <div className="flex justify-end">
-        <div className="max-w-[70%] bg-zinc-800 text-white px-4 py-2 rounded-b-2xl rounded-l-2xl shadow">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {ans.text}
-          </ReactMarkdown>
+        <div className="max-w-[85%] sm:max-w-[70%] bg-zinc-800 text-white px-4 py-2 rounded-b-2xl rounded-l-2xl shadow">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{ans.text}</ReactMarkdown>
         </div>
       </div>
     );
   }
 
   if (ans.type === "a") {
-    // AI Answer card (Gemini style)
+    // AI Answer card
     return (
       <div className="flex justify-start">
         <div className="w-full max-w-3xl bg-zinc-900 border border-zinc-800 rounded-2xl shadow overflow-hidden">
@@ -63,7 +61,6 @@ const Answers = ({ ans }) => {
                 em: ({ node, ...props }) => (
                   <em className="text-zinc-300" {...props} />
                 ),
-                // INLINE code
                 code({ inline, className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || "");
                   const raw = String(children).replace(/\n$/, "");
@@ -79,10 +76,10 @@ const Answers = ({ ans }) => {
                     );
                   }
 
-                  // BLOCK code → Gemini-like sub-card
+                  // BLOCK code
                   return (
                     <div className="my-3 rounded-xl border border-zinc-800 overflow-hidden">
-                      {/* sub-header */}
+                      {/* Sub-header */}
                       <div className="flex items-center justify-between px-3 py-1.5 bg-zinc-800 border-b border-zinc-800">
                         <span className="text-xs font-medium text-zinc-300">
                           Code{match[1] ? ` · ${match[1]}` : ""}
@@ -90,21 +87,23 @@ const Answers = ({ ans }) => {
                         <CopyBtn text={raw} />
                       </div>
 
-                      {/* highlighted code */}
-                      <SyntaxHighlighter
-                        language={match[1]}
-                        style={oneDark}
-                        PreTag="div"
-                        wrapLongLines
-                        customStyle={{
-                          margin: 0,
-                          background: "transparent",
-                          fontSize: "0.9rem",
-                          borderRadius: 0,
-                        }}
-                      >
-                        {raw}
-                      </SyntaxHighlighter>
+                      {/* Highlighted code */}
+                      <div className="overflow-x-auto">
+                        <SyntaxHighlighter
+                          language={match[1]}
+                          style={oneDark}
+                          PreTag="div"
+                          wrapLongLines
+                          customStyle={{
+                            margin: 0,
+                            background: "transparent",
+                            fontSize: "0.9rem",
+                            borderRadius: 0,
+                          }}
+                        >
+                          {raw}
+                        </SyntaxHighlighter>
+                      </div>
                     </div>
                   );
                 },
@@ -113,8 +112,6 @@ const Answers = ({ ans }) => {
               {ans.text}
             </ReactMarkdown>
           </div>
-
-         
         </div>
       </div>
     );
