@@ -112,7 +112,7 @@ const App = () => {
         </div>
 
         {/* Messages list */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 hide-scrollbar">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 pb-20 md:pb-4 space-y-4 hide-scrollbar">
           {messages.map((m, idx) => {
             const isLast = idx === messages.length - 1;
             return (
