@@ -1,4 +1,4 @@
-import  { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Answers from "./components/Answers";
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
 
   // -------------------- HANDLERS --------------------
   const askQuestion = async () => {
-    if (!question.trim()) return;
+    if (!question.trim() || loading) return;
 
     // push question immediately
     setMessages((prev) => [...prev, { type: "q", text: question }]);
@@ -100,7 +100,7 @@ const App = () => {
       </aside>
 
       {/* Chat area */}
-      <main className="col-span-4 flex flex-col">
+      <main className="col-span-4 flex flex-col h-screen overflow-hidden">
         {/* Header */}
         <div className="px-4 sm:px-6 pt-4 sm:pt-6">
           <h1 className="text-xl sm:text-2xl font-semibold text-zinc-200">
@@ -127,8 +127,12 @@ const App = () => {
             <div className="flex justify-start" ref={lastMsgRef}>
               <div className="bg-zinc-800 px-4 py-2 rounded-xl text-sm flex items-center gap-1">
                 <span className="animate-bounce">●</span>
-                <span className="animate-bounce [animation-delay:120ms]">●</span>
-                <span className="animate-bounce [animation-delay:240ms]">●</span>
+                <span className="animate-bounce [animation-delay:120ms]">
+                  ●
+                </span>
+                <span className="animate-bounce [animation-delay:240ms]">
+                  ●
+                </span>
               </div>
             </div>
           )}
@@ -146,7 +150,12 @@ const App = () => {
             />
             <button
               onClick={askQuestion}
-              className="px-3 sm:px-4 py-1.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm"
+              className={`px-3 sm:px-4 py-1.5 rounded-2xl text-white text-sm ${
+                loading
+                  ? "bg-zinc-700 cursor-not-allowed"
+                  : "bg-emerald-600 hover:bg-emerald-500"
+              }`}
+              disabled={loading}
             >
               Send
             </button>
