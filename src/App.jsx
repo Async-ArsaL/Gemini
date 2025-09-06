@@ -1,16 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
-import { URL, API_KEY } from "./constants";
+import  { useState, useRef, useEffect } from "react";
 import Answers from "./components/Answers";
 
 const App = () => {
   // -------------------- STATE --------------------
   const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([]); 
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [sessions, setSessions] = useState([]); 
+  const [sessions, setSessions] = useState([]);
 
   // -------------------- REFS --------------------
   const lastMsgRef = useRef(null);
+
+  // -------------------- ENV VARIABLES --------------------
+  const URL = import.meta.env.VITE_URL;
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   // -------------------- HANDLERS --------------------
   const askQuestion = async () => {
